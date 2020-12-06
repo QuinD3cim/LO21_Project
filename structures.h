@@ -3,10 +3,10 @@
 
 typedef struct l{
   char* premice;
-  struct l* next;
-} list;
+  struct l* suivant;
+} liste;
 
 typedef struct{
   list* premices;
   char* conclusion;
-}regle;
+} regle;
