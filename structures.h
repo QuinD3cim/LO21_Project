@@ -7,19 +7,19 @@
 
 /**
  * \struct liste
- * \brief Liste chaînée de prémices : élément d'une règle
+ * \brief Liste chaînée de prémisses : élément d'une règle
  */
 typedef struct l{
-  char* premice; /** \brief chaîne de caractères contenant l'intitulé d'une prémice */
+  char* premisse; /** \brief chaîne de caractères contenant l'intitulé d'une prémisse */
   struct l* suivant; /** \brief pointeur sur l'élément suivant de la liste */
 } liste;
 
 /**
  * \struct regle
- * \brief Produit cartésien d'une liste de prémices et d'une conclusion
+ * \brief Produit cartésien d'une liste de prémisses et d'une conclusion
  */
 typedef struct{
-  liste* premices; /** \brief liste de premices */
+  liste* premisses; /** \brief liste de prémisses */
   char* conclusion; /** \brief chaîne de caractère contenant l'intitulé d'une conclusion */
 } regle;
 
