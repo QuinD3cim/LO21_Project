@@ -3,7 +3,9 @@
 
 #include "structures.h"
 
+void viderBuffer();
 
+int lire(char* Buffer);
 
 
 #endif
