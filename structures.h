@@ -5,6 +5,12 @@
 #include <stdio.h>
 #include <string.h>
 
+
+typedef enum{
+  VRAI = 1,
+  FAUX = 0
+}bool;
+
 /**
  * \struct liste
  * \brief Liste chaînée de prémisses : élément d'une règle
