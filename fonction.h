@@ -19,7 +19,7 @@ bool Pas_premisse(regle r);
 
 char* Conclusion_regle(regle r);
 
-bc Creer_base();
+BC Creer_base();
 
 regle Regle_tete_base(bc b);
 
@@ -48,9 +48,10 @@ regle creer_regle();
  * \fn regle inserer_conclusion(regle r)
  * \brief fonction permettant de donner une conclusion à une regle
  * \param r - regle dans laquelle on veut insérer une conclusion
+ * \param c_conclusion - chaîne de caractères corespondant à la conclusion que l'on veut ajouter
  * \return une regle - correspond à la règle à laquelle on a ajouté une conclusion
  */
-regle inserer_conclusion(regle r);
+regle inserer_conclusion(regle r, char* c_conclusion);
 
 /**
  * \fn regle supprimer_premisse(regle r, char* intitule_premisse)
@@ -67,5 +68,14 @@ regle supprimer_premisse(regle r,char* intitule_premisse);
  * \return une premisse - la prémisse de tête
  */
 liste* premisse_tete(regle r);
+
+
+/** \fn BC ajouter_regle(BC base, regle r)
+ * \brief fonction permettant de rajouter une regle r dans une base de connaissances
+ * \param base - Base de connaissance que l'on va altérer
+ * \param r - regle que l'on veut ajouter à notre base de connaissances
+ * \return la base de connaissance altérée
+ */
+BC ajouter_regle(BC base, regle r);
 
 #endif

@@ -8,12 +8,6 @@
 
 /* Types */
 
-typedef struct elemP
-{
-    char* cc; /* nom de la prémisse */
-    struct elemP* ps; /* prémisse suivant */
-} premisse;
-
 typedef enum {
     VRAI = 1,
     FAUX = 0,
