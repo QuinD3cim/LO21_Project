@@ -6,10 +6,18 @@
 #include <string.h>
 
 
-typedef enum{
-  VRAI = 1,
-  FAUX = 0
-}bool;
+/* Types */
+
+typedef struct elemP
+{
+    char* cc; /* nom de la prémisse */
+    struct elemP* ps; /* prémisse suivant */
+} premisse;
+
+typedef enum {
+    VRAI = 1,
+    FAUX = 0,
+} bool;
 
 /**
  * \struct liste
@@ -27,13 +35,16 @@ typedef struct l{
 typedef struct{
   liste* premisses; /** \brief liste de prémisses */
   char* conclusion; /** \brief chaîne de caractère contenant l'intitulé d'une conclusion */
-} regle;
+} regleElem;
+
+typedef regleElem* regle;
 
 /**
  * \struct connaissance
  * \brief élément d'une base de connaissance : liste de regle
  */
 typedef struct bc_elem{
+  struct bc_elem* precedent; /** \brief pointeur sur l'élément precedent de la base de connaissances */
   regle* regle; /** \brief liste de regles */
   struct bc_elem* suivant; /** \brief pointeur sur l'élément suivant de la base de connaissances */
 } connaissance;
@@ -43,9 +54,6 @@ typedef struct bc_elem{
  * \brief liste de connaissances
  */
 typedef connaissance* BC;
-
-
-
 
 
 #endif
