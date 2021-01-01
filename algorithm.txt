@@ -36,3 +36,33 @@ fin
 premisse_tete(r : regle) : premisse
     premisse_tete(r) = premisses(r)
 fin
+
+creer_base() : BC
+    
+Début
+    Creer(base) : BC
+    regle(base) <-- INDEFINI
+    suivant(base) <-- INDEFINI
+    creer_base() <-- base
+fin
+
+ajouter_regle_tete(base : BC, r : regle) : BC
+    
+Début    
+    nouvelle_connaissance : BC
+    nouvelle_connaissance <-- creer_base()
+    Creer(regle(nouvelle_connaissance)) : regle
+    regle(nouvelle_connaissance) <-- r
+    suivant(nouvelle_connaisance) <-- base
+    retourner nouvelle_connaissance
+fin
+
+ajouter_regle(base : BC, r : regle) : BC
+
+Début
+    Si regle(base) = INDEFINI alors
+        retourner ajouter_regle_tete(base, r)
+    Sinon
+        retourner ajouter_regle_tete(ajouter_regle(suivant(base), r),regle(base))
+    fin si
+fin
