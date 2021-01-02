@@ -13,15 +13,15 @@
 
 void Ajout_premisse(regle r, char* s);
 
-bool Si_premisse(premisse* pp, char* s);
+bool Si_premisse(liste* pp, char* s);
 
 bool Pas_premisse(regle r);
 
 char* Conclusion_regle(regle r);
 
-bc Creer_base();
+BC Creer_base();
 
-regle Regle_tete_base(bc b);
+regle Regle_tete_base(BC b);
 
 /**
  * \fn void vider Buffer()

@@ -45,7 +45,7 @@ typedef regleElem* regle;
  */
 typedef struct bc_elem{
   struct bc_elem* precedent; /** \brief pointeur sur l'élément precedent de la base de connaissances */
-  regle* regle; /** \brief liste de regles */
+  regle regle; /** \brief liste de regles */
   struct bc_elem* suivant; /** \brief pointeur sur l'élément suivant de la base de connaissances */
 } connaissance;
 

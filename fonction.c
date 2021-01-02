@@ -8,68 +8,68 @@
 void Ajout_premisse(regle r, char* s){
 
     /* créé la prémisse l */
-    premisse l;
-    l.cc = (char*) malloc (sizeof(char)*strlen(s)); 
-    l.cc = s;
-    l.ps = NULL;
+    liste l;
+    l.premisse = (char*) malloc (sizeof(char)*strlen(s)); 
+    l.premisse = s;
+    l.suivant = NULL;
 
-    if (r->p == NULL) /* Si la règle ne contient pas de prémisses */
+    if (r->premisses == NULL) /* Si la règle ne contient pas de prémisses */
     {
-        r->p = &l; /* On ajoute l comme prémisse de la règle r  */
+        r->premisses = &l; /* On ajoute l comme prémisse de la règle r  */
     } 
     else 
     {
-        premisse* indexP = r->p; /* On crée une variable pour parcourir les prémisses de r à laquelle on affecte la première prémisse de r*/
-        while (indexP->ps !=  NULL) /* Tant que le prochain prémisse est défini */
+        liste* indexP = r->premisses; /* On crée une variable pour parcourir les prémisses de r à laquelle on affecte la première prémisse de r*/
+        while (indexP->suivant !=  NULL) /* Tant que le prochain prémisse est défini */
         {
-            indexP = indexP->ps; /* On défini la variable comme la prochaine prémisse */
+            indexP = indexP->suivant; /* On défini la variable comme la prochaine prémisse */
         }
-        indexP->ps = &l; /* On défini la prochaine prémisse comme étant l */
+        indexP->suivant = &l; /* On défini la prochaine prémisse comme étant l */
     }
     
 }
 
-bool Si_premisse(premisse* pp, char* s){
+bool Si_premisse(liste* pp, char* s){
 
-    if (strcmp(pp->cc,s)==0) /* Sinon si le texte de la prémisse correspond à la prémisse recherchée*/
+    if (strcmp(pp->premisse,s)==0) /* Sinon si le texte de la prémisse correspond à la prémisse recherchée*/
     {
-        return TRUE; 
+        return VRAI; 
     }
-    else if (pp->ps == NULL) /* Sinon s'il n'y a pas de prémisse suivante */
+    else if (pp->suivant == NULL) /* Sinon s'il n'y a pas de prémisse suivante */
     {
-        return FALSE;
+        return FAUX;
     }
     else /* S'il y a une prémisse suivante */
     {
         printf("D\n");
-        return FALSE + Si_premisse(pp->ps,s);
+        return FAUX + Si_premisse(pp->suivant,s);
     } 
 
 }
 
 bool Pas_premisse(regle r){
 
-    if (r->p == NULL) /* S'il n'y a pas de premisse */
+    if (r->premisses == NULL) /* S'il n'y a pas de premisse */
     {
-        return TRUE;
+        return VRAI;
     }
     else
     {
-        return FALSE;
+        return FAUX;
     }
 
 }
 
 char* Conclusion_regle(regle r){
 
-    if (r->c == NULL)
+    if (r->conclusion == NULL)
     {
         printf("Erreur : Cette règle n'a pas de conclusion.\n");
         return "error c not found";
     }
     else
     {
-        return r->c;
+        return r->conclusion;
     }
 
 }
@@ -101,18 +101,19 @@ int lire(char* Buffer){
 }
 
 regle creer_regle(){
-    regle r;
+    regleElem r;
     r.premisses = NULL;
     r.conclusion = NULL;
-    return r;
+    regle nr = &r;
+    return nr;
 }
 
 regle inserer_conclusion(regle r){
-    r.conclusion = (char*) malloc(sizeof(char)*TAILLE_PHRASE_MAX);
-    if(lire(r.conclusion)!=EXIT_SUCCESS){
+    r->conclusion = (char*) malloc(sizeof(char)*TAILLE_PHRASE_MAX);
+    if(lire(r->conclusion)!=EXIT_SUCCESS){
         return r;
     } else{
-        free(r.conclusion);
+        free(r->conclusion);
         return r;
     }
 }
@@ -122,23 +123,23 @@ regle inserer_conclusion(regle r){
 
 regle supprimer_premisse(regle r,char* intitule_premisse){
     liste* copie_premisse;
-    if(est_premisse_vide(r.premisses)==VRAI){
+    if(est_premisse_vide(r->premisses)==VRAI){
         return r;
-    } else if(est_premisse_vide((r.premisses)->suivant)==VRAI){
-        if(strcmp((r.premisses)->premisse,intitule_premisse) == 1){
-            free((r.premisses)->premisse);
-            (r.premisses)->premisse = NULL;
+    } else if(est_premisse_vide((r->premisses)->suivant)==VRAI){
+        if(strcmp((r->premisses)->premisse,intitule_premisse) == 1){
+            free((r->premisses)->premisse);
+            (r->premisses)->premisse = NULL;
             return r;
         } else {
             return r;
         }
     } else {
-        while((est_premisse_vide((r.premisses)->suivant)==FAUX) &&(strcmp(((r.premisses)->suivant)->premisse, intitule_premisse))){
-            r.premisses = (r.premisses)->suivant;
+        while((est_premisse_vide((r->premisses)->suivant)==FAUX) &&(strcmp(((r->premisses)->suivant)->premisse, intitule_premisse))){
+            r->premisses = (r->premisses)->suivant;
         }
-        if(est_premisse_vide((r.premisses)->suivant)==FAUX){
-            copie_premisse = (r.premisses)->suivant;
-            (r.premisses)->suivant = ((r.premisses)->suivant)->suivant;
+        if(est_premisse_vide((r->premisses)->suivant)==FAUX){
+            copie_premisse = (r->premisses)->suivant;
+            (r->premisses)->suivant = ((r->premisses)->suivant)->suivant;
             free(copie_premisse);
 
         }
@@ -148,38 +149,38 @@ regle supprimer_premisse(regle r,char* intitule_premisse){
  
 
 liste* premisse_tete(regle r){
-    return r.premisses;
+    return r->premisses;
 }
 
 /* Fonctions base de connaissance */
 
-bc Creer_base(){
-    bcElem b;
-    b.r = NULL;
-    b.rp = NULL;
-    b.rp = NULL;
-    bc base = &b;
+BC Creer_base(){
+    connaissance b;
+    b.precedent = NULL;
+    b.suivant = NULL;
+    b.regle = NULL;
+    BC base = &b;
     return base;
 }
 
-regle Regle_tete_base(bc b){
+regle Regle_tete_base(BC b){
 
     if (b == NULL)
     {
         return NULL;
     }
-    else if (b->rp == NULL)
+    else if (b->precedent == NULL)
     {
-        return b->r;
+        return b->regle;
     }
     else
     {
-        bc indexB = b;
-        while (indexB->rp != NULL)
+        BC indexB = b;
+        while (indexB->precedent != NULL)
         {
-            indexB = indexB->rp;
+            indexB = indexB->precedent;
         }
-        return indexB->r;
+        return indexB->regle;
     }
 
 }

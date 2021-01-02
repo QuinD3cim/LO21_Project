@@ -7,7 +7,7 @@ all: $(EXEC)
 project.exe: fonction.o main.o
 	$(CC) -o $@ fonction.o main.o
 
-fonction.o: fonction.c
+fonction.o: fonction.c structures.h
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 main.o: main.c fonction.h
