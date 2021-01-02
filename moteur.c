@@ -19,3 +19,86 @@ int menu(char* titre_menu, char** tableau_proposition){
     }
     return -1;
 }
+
+char* choix_base_de_faits(){
+    int index_base_de_faits = -1;
+    struct dirent *dir;
+    int iteration = 0;
+    char** tableau_fichiers = NULL;
+    tableau_fichiers;
+    char* buffer_fichier;
+    // opendir() renvoie un pointeur de type DIR. 
+    DIR *d = opendir("base_de_faits");
+
+    if (d != NULL){
+        while ((dir = readdir(d)) != NULL){
+            if(sscanf(dir->d_name,"bf_%s")!= EOF){
+                buffer_fichier =(char*) malloc(sizeof(char)*strlen(dir->d_name));
+                buffer_fichier = strcpy(buffer_fichier, dir->d_name);
+
+                if(tableau_fichiers == NULL){
+                    tableau_fichiers = (char**) malloc(sizeof(char*));
+                } else{
+                    tableau_fichiers = realloc(tableau_fichiers, sizeof(char*)*(iteration+1));
+                }
+
+                tableau_fichiers[iteration] = (char*) malloc(sizeof(char)*strlen(buffer_fichier));
+                tableau_fichiers[iteration] = strcpy(tableau_fichiers[iteration],buffer_fichier);
+                tableau_fichiers[iteration + 1] = NULL;
+
+                iteration++;
+                free(buffer_fichier);
+            }
+            printf("%s\n", dir->d_name);
+        }
+        closedir(d);
+        index_base_de_faits = menu("Quelle base de faits voulez-vous choisir ?", tableau_fichiers);
+        buffer_fichier = (char*) malloc(sizeof(char)*(strelen(tableau_fichiers[index_base_de_faits]+ 15)));
+        buffer_fichier = strcpy(buffer_fichier,"base_de_faits\\");
+        
+        return strcat(buffer_fichier, tableau_fichiers[index_base_de_faits]);
+    }
+    return NULL;
+}
+
+
+char* choix_base_de_connaissances(){
+    int index_base_de_connaissances = -1;
+    struct dirent *dir;
+    int iteration = 0;
+    char** tableau_fichiers = NULL;
+    tableau_fichiers;
+    char* buffer_fichier;
+    // opendir() renvoie un pointeur de type DIR. 
+    DIR *d = opendir("base_de_connaissances"); 
+    if (d != NULL){
+        while ((dir = readdir(d)) != NULL){
+            if(sscanf(dir->d_name,"bf_%s")!= EOF){
+                buffer_fichier =(char*) malloc(sizeof(char)*strlen(dir->d_name));
+                buffer_fichier = strcpy(buffer_fichier, dir->d_name);
+
+                if(tableau_fichiers == NULL){
+                    tableau_fichiers = (char**) malloc(sizeof(char*));
+                } else{
+                    tableau_fichiers = realloc(tableau_fichiers, sizeof(char*)*(iteration+1));
+                }
+
+                tableau_fichiers[iteration] = (char*) malloc(sizeof(char)*strlen(buffer_fichier));
+                tableau_fichiers[iteration] = strcpy(tableau_fichiers[iteration],buffer_fichier);
+                tableau_fichiers[iteration + 1] = NULL;
+
+                iteration++;
+                free(buffer_fichier);
+            }
+            printf("%s\n", dir->d_name);
+        }
+        closedir(d);
+        index_base_de_connaissances = menu("Quelle base de connaissances voulez-vous choisir ?", tableau_fichiers);
+        buffer_fichier = (char*) malloc(sizeof(char)*(strelen(tableau_fichiers[index_base_de_connaissances]+ 22)));
+        buffer_fichier = strcpy(buffer_fichier,"base_de_connaissances\\");
+        
+        return strcat(buffer_fichier, tableau_fichiers[index_base_de_connaissances]);
+    }
+    return NULL;
+}
+
