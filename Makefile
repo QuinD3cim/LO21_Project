@@ -7,7 +7,7 @@ all: $(EXEC)
 project.exe: fonction.o main.o
 	$(CC) -o $@ fonction.o main.o
 
-fonction.o: fonction.c
+fonction.o: fonction.c structures.h
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 moteur.o: moteur.c
@@ -18,5 +18,3 @@ main.o: main.c moteur.h
 
 clean:
 	del *.o $(EXEC)
-
-
