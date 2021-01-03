@@ -10,9 +10,11 @@ project.exe: fonction.o main.o
 fonction.o: fonction.c structures.h
 	$(CC) -o $@ -c $< $(CFLAGS)
 
-main.o: main.c fonction.h
+moteur.o: moteur.c
+	$(CC) -o $@ -c $< $(CFLAGS)
+
+main.o: main.c moteur.h
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 clean:
 	del *.o $(EXEC)
-

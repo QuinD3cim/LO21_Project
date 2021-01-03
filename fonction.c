@@ -101,31 +101,23 @@ int lire(char* Buffer){
 }
 
 regle creer_regle(){
-    regleElem r;
-    r.premisses = NULL;
-    r.conclusion = NULL;
-    regle nr = &r;
-    return nr;
+    regle r = (regle) malloc(sizeof(regleElem));
+    r->premisses = NULL;
+    r->conclusion = NULL;
+    return r;
 }
 
-regle inserer_conclusion(regle r){
-    r->conclusion = (char*) malloc(sizeof(char)*TAILLE_PHRASE_MAX);
-    if(lire(r->conclusion)!=EXIT_SUCCESS){
-        return r;
-    } else{
-        free(r->conclusion);
-        return r;
-    }
+regle inserer_conclusion(regle r, char* c_conclusion){
+    r->conclusion = (char*) malloc(sizeof(char)*strlen(c_conclusion));
+    r->conclusion = strcpy(r->conclusion, c_conclusion);
+    return r; 
 }
-
-
-
 
 regle supprimer_premisse(regle r,char* intitule_premisse){
     liste* copie_premisse;
-    if(est_premisse_vide(r->premisses)==VRAI){
+    if(Pas_premisse(r->premisses)==VRAI){
         return r;
-    } else if(est_premisse_vide((r->premisses)->suivant)==VRAI){
+    } else if(Pas_premisse((r->premisses)->suivant)==VRAI){
         if(strcmp((r->premisses)->premisse,intitule_premisse) == 1){
             free((r->premisses)->premisse);
             (r->premisses)->premisse = NULL;
@@ -134,10 +126,10 @@ regle supprimer_premisse(regle r,char* intitule_premisse){
             return r;
         }
     } else {
-        while((est_premisse_vide((r->premisses)->suivant)==FAUX) &&(strcmp(((r->premisses)->suivant)->premisse, intitule_premisse))){
+        while((Pas_premisse((r->premisses)->suivant)==FAUX) &&(strcmp(((r->premisses)->suivant)->premisse, intitule_premisse))){
             r->premisses = (r->premisses)->suivant;
         }
-        if(est_premisse_vide((r->premisses)->suivant)==FAUX){
+        if(Pas_premisse((r->premisses)->suivant)==FAUX){
             copie_premisse = (r->premisses)->suivant;
             (r->premisses)->suivant = ((r->premisses)->suivant)->suivant;
             free(copie_premisse);
@@ -155,12 +147,11 @@ liste* premisse_tete(regle r){
 /* Fonctions base de connaissance */
 
 BC Creer_base(){
-    connaissance b;
-    b.precedent = NULL;
-    b.suivant = NULL;
-    b.regle = NULL;
-    BC base = &b;
-    return base;
+    BC b = (BC) malloc(sizeof(connaissance));
+    b->precedent = NULL;
+    b->suivant = NULL;
+    b->regle = NULL;
+    return b;
 }
 
 regle Regle_tete_base(BC b){
@@ -183,4 +174,20 @@ regle Regle_tete_base(BC b){
         return indexB->regle;
     }
 
+}
+
+BC ajouter_regle(BC base, regle r){
+    BC nouvelle_connaissance = Creer_base();
+    nouvelle_connaissance->regle = r;
+    nouvelle_connaissance->suivant = NULL;
+    if(base->regle == NULL){
+        nouvelle_connaissance->precedent = NULL;
+        return nouvelle_connaissance;
+    } 
+    while(base->suivant != NULL){
+        base = base->suivant;
+    }
+    nouvelle_connaissance->precedent = base;
+    base->suivant = nouvelle_connaissance;
+    return base;
 }
