@@ -19,7 +19,7 @@ typedef enum {
  */
 typedef struct l{
   char* premisse; /** \brief chaîne de caractères contenant l'intitulé d'une prémisse */
-  bool est_present;
+  bool est_present; /** \brief booléen servant quand on veut utiliser le moteur d'inférence. De base il est à FAUX mais si la prémisse se trouve dans la base de faits alors ce paramètre passe à VRAI. */
   struct l* suivant; /** \brief pointeur sur l'élément suivant de la liste */
 } liste;
 
