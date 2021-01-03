@@ -1,7 +1,7 @@
-#include "fonction.h"
+#include "moteur.h"
 
 int main(int argc, char* argv[]){
-
+    char* fichier_choisi = NULL;
     regle r = creer_regle();
     char* c = (char*) malloc (sizeof(char)*10);
     c = "sauterelle";
@@ -49,5 +49,7 @@ int main(int argc, char* argv[]){
     ajouter_regle(b,r); 
     printf("La conclusion de la premiere regle de b est : %s\n",b->regle->conclusion);
     
+    fichier_choisi = choix_base_de_connaissances();
+    printf("\nLe fichier choisi est : %s",fichier_choisi);
     return EXIT_SUCCESS;
 }

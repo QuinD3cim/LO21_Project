@@ -1,16 +1,16 @@
 CC = gcc
-CFLAGS =-Werror -pedantic -Wall -std=c99
+CFLAGS =-Werror -pedantic -ansi -Wall -std=c99
 EXEC = project.exe
 
 all: $(EXEC)
 
-project.exe: fonction.o main.o
-	$(CC) -o $@ fonction.o main.o
+project.exe: moteur.o main.o fonction.o
+	$(CC) -o $@ $^
 
-fonction.o: fonction.c structures.h
+moteur.o: moteur.c fonction.h
 	$(CC) -o $@ -c $< $(CFLAGS)
 
-moteur.o: moteur.c
+fonction.o: fonction.c structures.h
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 main.o: main.c moteur.h
