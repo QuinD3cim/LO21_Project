@@ -7,15 +7,13 @@
 
 void Ajout_premisse(regle r, char* s){
 
-    /* créé la prémisse l */
-    liste l;
-    l.premisse = (char*) malloc (sizeof(char)*strlen(s)); 
-    l.premisse = s;
-    l.suivant = NULL;
-
     if (r->premisses == NULL) /* Si la règle ne contient pas de prémisses */
     {
-        r->premisses = &l; /* On ajoute l comme prémisse de la règle r  */
+        /* Ajout de la prémisse en fin */
+        r->premisses = (liste*) malloc (sizeof(liste));
+        r->premisses->premisse = (char*) malloc (sizeof(char)*strlen(s));
+        r->premisses->premisse = s;
+        r->premisses->suivant = NULL;
     } 
     else 
     {
@@ -24,7 +22,11 @@ void Ajout_premisse(regle r, char* s){
         {
             indexP = indexP->suivant; /* On défini la variable comme la prochaine prémisse */
         }
-        indexP->suivant = &l; /* On défini la prochaine prémisse comme étant l */
+        /* Ajout de la prémisse en fin */
+        indexP->suivant = (liste*) malloc (sizeof(liste));
+        indexP->suivant->premisse = (char*) malloc (sizeof(char)*strlen(s));
+        indexP->suivant->premisse = s;
+        indexP->suivant->suivant = NULL;
     }
     
 }
@@ -41,7 +43,6 @@ bool Si_premisse(liste* pp, char* s){
     }
     else /* S'il y a une prémisse suivante */
     {
-        printf("D\n");
         return FAUX + Si_premisse(pp->suivant,s);
     } 
 
@@ -115,26 +116,37 @@ regle inserer_conclusion(regle r, char* c_conclusion){
 
 regle supprimer_premisse(regle r,char* intitule_premisse){
     liste* copie_premisse;
-    if(Pas_premisse(r->premisses)==VRAI){
-        return r;
-    } else if(Pas_premisse((r->premisses)->suivant)==VRAI){
-        if(strcmp((r->premisses)->premisse,intitule_premisse) == 1){
-            free((r->premisses)->premisse);
-            (r->premisses)->premisse = NULL;
-            return r;
-        } else {
-            return r;
-        }
-    } else {
-        while((Pas_premisse((r->premisses)->suivant)==FAUX) &&(strcmp(((r->premisses)->suivant)->premisse, intitule_premisse))){
-            r->premisses = (r->premisses)->suivant;
-        }
-        if(Pas_premisse((r->premisses)->suivant)==FAUX){
-            copie_premisse = (r->premisses)->suivant;
-            (r->premisses)->suivant = ((r->premisses)->suivant)->suivant;
-            free(copie_premisse);
 
+    if(Pas_premisse(r)==VRAI){
+        return r;
+    } 
+    else if (strcmp(r->premisses->premisse,intitule_premisse) == 0)
+    {
+        copie_premisse = r->premisses;
+        r->premisses = r->premisses->suivant;
+        free(copie_premisse);
+    } 
+    else 
+    {
+        liste* indexP = r->premisses;
+        printf("%s\n",indexP->premisse);
+        while((indexP->suivant != NULL) && (strcmp((indexP->suivant)->premisse, intitule_premisse) != 0)){
+            printf("+1\n");
+            indexP = indexP->suivant;
         }
+        if(indexP->suivant != NULL){
+            printf("1\n");
+            copie_premisse = indexP->suivant;
+            indexP->suivant = (indexP->suivant)->suivant;
+            free(copie_premisse);
+        }
+        else
+        {
+            printf("2\n");
+            free(indexP->suivant);
+            indexP->suivant = NULL;
+        }
+        
     }
     return r;
 }
@@ -177,17 +189,25 @@ regle Regle_tete_base(BC b){
 }
 
 BC ajouter_regle(BC base, regle r){
-    BC nouvelle_connaissance = Creer_base();
-    nouvelle_connaissance->regle = r;
-    nouvelle_connaissance->suivant = NULL;
     if(base->regle == NULL){
-        nouvelle_connaissance->precedent = NULL;
-        return nouvelle_connaissance;
+        base->precedent = NULL;
+        base->regle = r;
+        base->suivant = NULL;
+        return base;
     } 
-    while(base->suivant != NULL){
-        base = base->suivant;
+    else
+    {
+        BC nouvelle_connaissance = Creer_base();
+        nouvelle_connaissance->regle = r;
+        nouvelle_connaissance->suivant = NULL;
+
+        BC indexB = base;
+
+        while(indexB->suivant != NULL){
+            indexB = indexB->suivant;
+        }
+        nouvelle_connaissance->precedent = indexB;
+        indexB->suivant = nouvelle_connaissance;
+        return base;
     }
-    nouvelle_connaissance->precedent = base;
-    base->suivant = nouvelle_connaissance;
-    return base;
 }
