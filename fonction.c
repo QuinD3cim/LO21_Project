@@ -33,6 +33,32 @@ void Ajout_premisse(regle r, char* s){
     
 }
 
+void Ajout_premisse_liste(liste* l, char* s){
+    if (l == NULL) /* Si la règle ne contient pas de prémisses */
+    {
+        /* Ajout de la prémisse en fin */
+        l = (liste*) malloc (sizeof(liste));
+        l->premisse = (char*) malloc (sizeof(char)*strlen(s));
+        l->est_present = FAUX;
+        l->premisse = s;
+        l->suivant = NULL;
+    } 
+    else 
+    {
+        liste* indexP = l; /* On crée une variable pour parcourir les prémisses de r à laquelle on affecte la première prémisse de r*/
+        while (indexP->suivant !=  NULL) /* Tant que le prochain prémisse est défini */
+        {
+            indexP = indexP->suivant; /* On défini la variable comme la prochaine prémisse */
+        }
+        /* Ajout de la prémisse en fin */
+        indexP->suivant = (liste*) malloc (sizeof(liste));
+        indexP->suivant->premisse = (char*) malloc (sizeof(char)*strlen(s));
+        l->est_present = FAUX;
+        indexP->suivant->premisse = s;
+        indexP->suivant->suivant = NULL;
+    }
+}
+
 bool Si_premisse(liste* pp, char* s){
 
     if (strcmp(pp->premisse,s)==0) /* Sinon si le texte de la prémisse correspond à la prémisse recherchée*/
