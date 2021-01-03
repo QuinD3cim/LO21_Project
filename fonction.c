@@ -12,6 +12,7 @@ void Ajout_premisse(regle r, char* s){
         /* Ajout de la prémisse en fin */
         r->premisses = (liste*) malloc (sizeof(liste));
         r->premisses->premisse = (char*) malloc (sizeof(char)*strlen(s));
+        r->premisses->est_present = FAUX;
         r->premisses->premisse = s;
         r->premisses->suivant = NULL;
     } 
@@ -25,6 +26,7 @@ void Ajout_premisse(regle r, char* s){
         /* Ajout de la prémisse en fin */
         indexP->suivant = (liste*) malloc (sizeof(liste));
         indexP->suivant->premisse = (char*) malloc (sizeof(char)*strlen(s));
+        r->premisses->est_present = FAUX;
         indexP->suivant->premisse = s;
         indexP->suivant->suivant = NULL;
     }

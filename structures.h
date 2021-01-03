@@ -19,6 +19,7 @@ typedef enum {
  */
 typedef struct l{
   char* premisse; /** \brief chaîne de caractères contenant l'intitulé d'une prémisse */
+  bool est_present;
   struct l* suivant; /** \brief pointeur sur l'élément suivant de la liste */
 } liste;
 
