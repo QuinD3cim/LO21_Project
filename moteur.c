@@ -102,3 +102,23 @@ char* choix_base_de_connaissances(){
     return NULL;
 }
 
+void moteur_inference(liste* base_de_faits,BC base_de_connaissances ){
+    liste* copie_bf = base_de_faits;
+    BC copie_bc;
+    liste* copie_liste_premisses;
+
+    /* Première phase : on scanne la base de connaissances pour savoir quelles propositions de la base de faits lui appartiennent */
+    while (copie_bf->premisse != NULL){
+        copie_bc = base_de_connaissances;
+        while(copie_bc->regle != NULL){
+            copie_liste_premisses = base_de_connaissances->regle->premisses;
+            while((copie_liste_premisses != NULL)&&!(Si_premisse(copie_liste_premisses,base_de_faits->premisse))){
+                copie_liste_premisses = copie_liste_premisses->suivant;
+            }
+            copie_bc = copie_bc->suivant;
+        }
+        copie_bf = copie_bf->suivant;
+    }
+
+    /* Deuxième phase : on ajoute les conclusions à la base de faits en fonction des regles qui n'ont que des prémisses vraies */
+}

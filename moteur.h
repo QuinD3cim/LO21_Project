@@ -25,5 +25,5 @@ char* choix_base_de_faits();
 char* choix_base_de_connaissances();
 
 
-void moteur_inferecence(liste* base_de_faits,BC base_de_connaissances );
+void moteur_inference(liste* base_de_faits,BC base_de_connaissances );
 #endif
