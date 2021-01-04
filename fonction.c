@@ -240,3 +240,34 @@ BC ajouter_regle(BC base, regle r){
         return base;
     }
 }
+
+void afficher_premisses(liste* l){
+    if(l != NULL){
+        printf("\n\t%s",l->premisse);
+        afficher_premisses(l->suivant);
+    }
+}
+
+void afficher_base_de_faits(liste* l, char* nom_base_de_faits){
+    printf("\nLa base de faits : %s\n\n", nom_base_de_faits);
+    afficher_premisses(l);    
+}
+
+void afficher_regle(regle r){
+    afficher_premisses(r->premisses);
+    printf("\n\n\t\tConclusion : %s", r->conclusion);
+}
+
+void afficher_base_connaissances(BC base, char* nom_base_connaissances){
+    int i = 1;
+    BC copie_base = base;
+    if(nom_base_connaissances !=NULL){
+        printf("\n%s",nom_base_connaissances);
+        while(copie_base != NULL){
+            printf("\n\n\tRegle no %d\n",i);
+            afficher_regle(copie_base->regle);
+            copie_base = copie_base->suivant;
+            i++;
+        }
+    }
+}

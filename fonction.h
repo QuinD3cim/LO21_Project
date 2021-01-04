@@ -124,4 +124,34 @@ liste* premisse_tete(regle r);
  */
 BC ajouter_regle(BC base, regle r);
 
+/**
+ * \fn void afficher_premisses(liste* l)
+ * \brief fonction affichant une liste de prémisse
+ * \param l - liste de prémisses que l'on souhaite afficher
+ */
+void afficher_premisses(liste* l);
+
+/**
+ * \fn void afficher_base_de_faits(liste* l, char* nom_base_de_faits)
+ * \brief fonction permettant d'afficher une base de faits
+ * \param l - liste de prémisse composant la base de connaissance
+ * \param nom_base_base_de_faits - nom de la base de faits
+ */
+void afficher_base_de_faits(liste* l, char* nom_base_de_faits);
+
+/**
+ * \fn void afficher_regle(regle r)
+ * \brief fonction permettant d'afficher une règle
+ * \param r - règle que l'on souhaite afficher
+ */
+void afficher_regle(regle r);
+
+/**
+ * \fn void afficher_base_connaissances(BC base, char* nom_base_connaissances)
+ * \brief fonction permettant d'afficher une base de connaissances
+ * \param base - la base que l'on souhaite afficher
+ * \param nom_base_connaissances - nom de la base de connaissances
+ */
+void afficher_base_connaissances(BC base, char* nom_base_connaissances);
+
 #endif

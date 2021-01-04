@@ -51,5 +51,6 @@ int main(int argc, char* argv[]){
     
     fichier_choisi = choix_base_de_connaissances();
     printf("\nLe fichier choisi est : %s",fichier_choisi);
+    afficher_base_connaissances(b,"base test");
     return EXIT_SUCCESS;
 }
