@@ -78,4 +78,10 @@ liste* premisse_tete(regle r);
  */
 BC ajouter_regle(BC base, regle r);
 
+
+/* Fonctions pour les fichiers */
+
+void Write_bc(BC b, char* bcName);
+
+
 #endif

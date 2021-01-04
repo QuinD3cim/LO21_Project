@@ -211,3 +211,63 @@ BC ajouter_regle(BC base, regle r){
         return base;
     }
 }
+
+/* Fonctions pour les fichiers */
+
+void Write_bc(BC b, char* bcName){
+
+    FILE* f;
+    
+    /*creating the file name*/
+    char* fileName = (char*) malloc (sizeof(char)*(7+strlen(bcName)));
+    strcpy(fileName,"BC_");
+    strcat(fileName,bcName);
+    strcat(fileName,".txt"); 
+    
+    /*opening the file*/
+    f = fopen(fileName,"w");
+    
+    /*writing the rules in the file*/
+    char line[100] = "";
+    regle r;
+    liste* p;
+    BC indexB = b;
+    bool end;
+    int i = 0;
+    if(b != NULL || b->regle != NULL) /* if base is not null or b has a rule */
+    {
+        do
+        {
+            i++;
+            printf("%d",i);
+            end = VRAI;
+            r = indexB->regle; /* r is the rule of the base */
+            p = r->premisses; /* p is a premisse of the rule r */
+            if (Pas_premisse(r) == FAUX) /* if there is at least one premisse */
+            {   
+                /* creating the line to add */       
+                while (p->suivant != NULL)
+                {
+                    strcat(line,p->premisse);
+                    strcat(line,"+");
+                    p = p->suivant;
+                }
+                strcat(line,p->premisse);
+                strcat(line,"=");
+                strcat(line,Conclusion_regle(r));
+                strcat(line,"\n");
+                fputs(line,f); /* adding the line in the file */
+            }
+            printf("%s",line);
+            if (indexB->suivant != NULL) /* selecting the next rule if the actual isn't the last and say to continue */
+            {
+                indexB = indexB->suivant;
+                end = FAUX;
+                strcpy(line,"");
+            }
+        } while(end == FAUX); /* while we don't say to end it */
+    }
+    
+    fclose(f);
+
+}
