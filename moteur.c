@@ -100,48 +100,53 @@ char* choix_base_de_connaissances(){
 }
 
 liste* moteur_inference(liste* base_de_faits,BC base_de_connaissances ){
-    liste* copie_bf = base_de_faits;
+    liste* copie_bf;
     BC copie_bc;
     liste* copie_liste_premisses;
+    bool premisse_en_plus;
+    do{
+        premisse_en_plus = FAUX;
+        copie_bf = base_de_faits;
+        /* Première phase : on scanne la base de connaissances pour savoir quelles propositions de la base de faits lui appartiennent */
+        while ((copie_bf != NULL)&&(copie_bf->premisse != NULL)){
+            copie_bc = base_de_connaissances;
 
-    /* Première phase : on scanne la base de connaissances pour savoir quelles propositions de la base de faits lui appartiennent */
-    while ((copie_bf != NULL)&&(copie_bf->premisse != NULL)){
-        copie_bc = base_de_connaissances;
+            while((copie_bc != NULL)&&(copie_bc->regle)&&(copie_bc->regle->premisses != NULL)){
+                copie_liste_premisses = copie_bc->regle->premisses;
+                
+                if(Si_premisse(copie_liste_premisses,copie_bf->premisse) == VRAI){
+                    trouver_premisse(copie_bc->regle,copie_bf->premisse)->est_present = VRAI;
+                }
 
-        while((copie_bc != NULL)&&(copie_bc->regle)&&(copie_bc->regle->premisses != NULL)){
-            copie_liste_premisses = copie_bc->regle->premisses;
-            
-            if(Si_premisse(copie_liste_premisses,copie_bf->premisse) == VRAI){
-                trouver_premisse(copie_bc->regle,copie_bf->premisse)->est_present = VRAI;
+                copie_liste_premisses = copie_liste_premisses->suivant;
+                copie_bc = copie_bc->suivant;
             }
 
-            copie_liste_premisses = copie_liste_premisses->suivant;
+            copie_bf = copie_bf->suivant;
+        }
+
+        /* Deuxième phase : on ajoute les conclusions à la base de faits en fonction des regles qui n'ont que des prémisses vraies */
+        copie_bf = base_de_faits;
+        copie_bc = base_de_connaissances;
+
+        while((copie_bc->suivant != NULL)&&(copie_bc->suivant->regle != NULL)&&(copie_bc->suivant->regle->conclusion != NULL)){
+            copie_liste_premisses = copie_bc->regle->premisses;
+            printf("\nla regle traitee : %s",copie_bc->regle->conclusion);
+            
+            while((copie_liste_premisses != NULL)&&(copie_liste_premisses->est_present==VRAI)){
+                printf("\n%s : %d",copie_liste_premisses->premisse,copie_liste_premisses->est_present);
+                
+                copie_liste_premisses = copie_liste_premisses->suivant;
+            }
+
+            if((copie_liste_premisses == NULL)&&(Si_premisse(base_de_faits,copie_bc->regle->conclusion)==FAUX)){
+                printf("\nla regle ajoutee est : %s",copie_bc->regle->conclusion);
+                base_de_faits = Ajout_premisse_liste(base_de_faits,copie_bc->regle->conclusion);
+                premisse_en_plus = VRAI;
+            }
             copie_bc = copie_bc->suivant;
         }
-
-        copie_bf = copie_bf->suivant;
-    }
-
-    /* Deuxième phase : on ajoute les conclusions à la base de faits en fonction des regles qui n'ont que des prémisses vraies */
-    copie_bf = base_de_faits;
-    copie_bc = base_de_connaissances;
-
-    while((copie_bc != NULL)&&(copie_bc->regle != NULL)&&(copie_bc->regle->conclusion != NULL)){
-        copie_liste_premisses = copie_bc->regle->premisses;
-        printf("\nla regle traitee : %s",copie_bc->regle->conclusion);
-        
-        while((copie_liste_premisses != NULL)&&(copie_liste_premisses->est_present==VRAI)){
-            printf("\n%s : %d",copie_liste_premisses->premisse,copie_liste_premisses->est_present);
-            
-            copie_liste_premisses = copie_liste_premisses->suivant;
-        }
-
-        if((copie_liste_premisses == NULL)&&(Si_premisse(base_de_faits,copie_bc->regle->conclusion)==FAUX)){
-            printf("\nla regle ajoutee est : %s",copie_bc->regle->conclusion);
-            base_de_faits = Ajout_premisse_liste(base_de_faits,copie_bc->regle->conclusion);
-        }
-        copie_bc = copie_bc->suivant;
-    }
+    } while(premisse_en_plus);
 
     return base_de_faits;
 }

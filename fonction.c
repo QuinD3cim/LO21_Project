@@ -403,6 +403,8 @@ BC Read_bc(char* fileName){
             i++;
         }
     }
+    fclose(f);
+    free(indexB->suivant);
     indexB->suivant = NULL;
     return b;
 

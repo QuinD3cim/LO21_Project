@@ -20,8 +20,10 @@ int main(int argc, char* argv[]){
     
 
     bf_dauphin = Ajout_premisse_liste(bf_dauphin,ec);
+    bf_dauphin = Ajout_premisse_liste(bf_dauphin,"grande_dent");
     bf_dauphin = Ajout_premisse_liste(bf_dauphin,"event");
-    bf_dauphin = Ajout_premisse_liste(bf_dauphin,"mamifere");
+    bf_dauphin = Ajout_premisse_liste(bf_dauphin,"mamelles");
+    bf_dauphin = Ajout_premisse_liste(bf_dauphin,"in_utero");
 
     regle re = creer_regle();
 
