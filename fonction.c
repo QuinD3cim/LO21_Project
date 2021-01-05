@@ -268,6 +268,7 @@ void afficher_base_connaissances(BC base, char* nom_base_connaissances){
             i++;
         }
     }
+}
 
     /* Fonctions pour les fichiers */
 
