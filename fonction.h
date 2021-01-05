@@ -23,11 +23,11 @@ void Ajout_premisse(regle r, char* s);
 
 /**
  * \fn void Ajout_premisse(regle r, char* s)
- * \brief fonction permettant d'ajouter une prémisse dans une règle
+ * \brief fonction permettant d'ajouter une prémisse dans une premisse
  * \param l - liste de prémisses que l'on souhaite altérer
  * \param s - chaîne de caractère / intitulé de la prémisse que l'on veut ajouter
  */
-void Ajout_premisse_liste(liste* l, char* s);
+liste* Ajout_premisse_liste(liste* l, char* s);
 
 /**
  * \fn bool Si_premisse(liste* pp, char* s)

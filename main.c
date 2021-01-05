@@ -2,15 +2,26 @@
 
 int main(int argc, char* argv[]){
     char* fichier_choisi = NULL;
+    liste* bf_dauphin = NULL;
+    
+
+    
+    
+    
     regle r = creer_regle();
-    char* c = (char*) malloc (sizeof(char)*10);
+    char* c = (char*) malloc (sizeof(char)*11);
     c = "sauterelle";
-    char* ex = (char*) malloc (sizeof(char)*12);
+    char* ex = (char*) malloc (sizeof(char)*13);
     ex = "exosquelette";
-    char* ec = (char*) malloc (sizeof(char)*7);
+    char* ec = (char*) malloc (sizeof(char)*8);
     ec = "ecaille";
-    char* i = (char*) malloc (sizeof(char)*7);
+    char* i = (char*) malloc (sizeof(char)*8);
     i = "insecte";
+    
+
+    bf_dauphin = Ajout_premisse_liste(bf_dauphin,ec);
+    bf_dauphin = Ajout_premisse_liste(bf_dauphin,"event");
+    bf_dauphin = Ajout_premisse_liste(bf_dauphin,"mamifere");
 
     regle re = creer_regle();
 
@@ -51,8 +62,11 @@ int main(int argc, char* argv[]){
     
 
     afficher_base_connaissances(br,fichier_choisi);
+    printf("\n%s",bf_dauphin->premisse);
+    afficher_base_de_faits(bf_dauphin,"Base de faits du dauphin");
     
-    
+    bf_dauphin = moteur_inference(bf_dauphin,br);
+    afficher_base_de_faits(bf_dauphin,"Base de faits du dauphin");
 
     return EXIT_SUCCESS;
 }

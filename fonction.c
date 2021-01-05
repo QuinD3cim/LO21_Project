@@ -26,14 +26,14 @@ void Ajout_premisse(regle r, char* s){
         /* Ajout de la prémisse en fin */
         indexP->suivant = (liste*) malloc (sizeof(liste));
         indexP->suivant->premisse = (char*) malloc (sizeof(char)*strlen(s));
-        r->premisses->est_present = FAUX;
+        indexP->est_present = FAUX;
         indexP->suivant->premisse = s;
         indexP->suivant->suivant = NULL;
     }
     
 }
 
-void Ajout_premisse_liste(liste* l, char* s){
+liste* Ajout_premisse_liste(liste* l, char* s){
     if (l == NULL) /* Si la règle ne contient pas de prémisses */
     {
         /* Ajout de la prémisse en fin */
@@ -48,15 +48,16 @@ void Ajout_premisse_liste(liste* l, char* s){
         liste* indexP = l; /* On crée une variable pour parcourir les prémisses de r à laquelle on affecte la première prémisse de r*/
         while (indexP->suivant !=  NULL) /* Tant que le prochain prémisse est défini */
         {
-            indexP = indexP->suivant; /* On défini la variable comme la prochaine prémisse */
+            indexP = indexP->suivant; /* On définit la variable comme la prochaine prémisse */
         }
         /* Ajout de la prémisse en fin */
         indexP->suivant = (liste*) malloc (sizeof(liste));
         indexP->suivant->premisse = (char*) malloc (sizeof(char)*strlen(s));
-        l->est_present = FAUX;
+        indexP->est_present = FAUX;
         indexP->suivant->premisse = s;
         indexP->suivant->suivant = NULL;
     }
+    return l;
 }
 
 bool Si_premisse(liste* pp, char* s){
@@ -247,7 +248,7 @@ void afficher_premisses(liste* l){
 }
 
 void afficher_base_de_faits(liste* l, char* nom_base_de_faits){
-    printf("\nLa base de faits : %s\n\n", nom_base_de_faits);
+    printf("\nLa base de faits : %s\n", nom_base_de_faits);
     afficher_premisses(l);    
 }
 

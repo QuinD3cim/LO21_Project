@@ -105,7 +105,7 @@ liste* moteur_inference(liste* base_de_faits,BC base_de_connaissances ){
     liste* copie_liste_premisses;
 
     /* Première phase : on scanne la base de connaissances pour savoir quelles propositions de la base de faits lui appartiennent */
-    while (copie_bf->premisse != NULL){
+    while ((copie_bf != NULL)&&(copie_bf->premisse != NULL)){
         copie_bc = base_de_connaissances;
         while(copie_bc->regle != NULL){
             copie_liste_premisses = copie_bc->regle->premisses;
@@ -116,17 +116,18 @@ liste* moteur_inference(liste* base_de_faits,BC base_de_connaissances ){
         }
         copie_bf = copie_bf->suivant;
     }
-
     /* Deuxième phase : on ajoute les conclusions à la base de faits en fonction des regles qui n'ont que des prémisses vraies */
     copie_bf = base_de_faits;
     copie_bc = base_de_connaissances;
     while(copie_bc->regle != NULL){
         copie_liste_premisses = copie_bc->regle->premisses;
+        printf("\nla regle traitee : %s",copie_bc->regle->conclusion);
         while((copie_liste_premisses != NULL)&&(copie_liste_premisses->est_present==VRAI)){
             copie_liste_premisses = copie_liste_premisses->suivant;
         }
         if((copie_liste_premisses == NULL)&&(Si_premisse(base_de_faits,copie_bc->regle->conclusion)==FAUX)){
-            Ajout_premisse_liste(base_de_faits,copie_bc->regle->conclusion);
+            printf("\nla regle ajoutee est : %s",copie_bc->regle->conclusion);
+            base_de_faits = Ajout_premisse_liste(base_de_faits,copie_bc->regle->conclusion);
         }
         copie_bc = copie_bc->suivant;
     }
