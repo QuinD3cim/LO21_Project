@@ -176,6 +176,32 @@ regle supprimer_premisse(regle r,char* intitule_premisse){
     return r;
 }
 
+liste* trouver_premisse(regle r,char* intitule_premisse){
+
+    if(Pas_premisse(r)==VRAI){
+        return NULL;
+    }
+    else if (strcmp(r->premisses->premisse,intitule_premisse) == 0)
+    {
+        return r->premisses;
+    } 
+    else 
+    {
+        liste* indexP = r->premisses;
+        while((indexP->suivant != NULL) && (strcmp((indexP->suivant)->premisse, intitule_premisse) != 0)){
+            indexP = indexP->suivant;
+        }
+        if(indexP->suivant != NULL){
+            return (indexP->suivant);
+        }
+        else
+        {
+            return NULL;
+        }
+        
+    }
+}
+
 liste* premisse_tete(regle r){
     return r->premisses;
 }

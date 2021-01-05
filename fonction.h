@@ -100,6 +100,8 @@ regle inserer_conclusion(regle r, char* c_conclusion);
  */
 regle supprimer_premisse(regle r,char* intitule_premisse);
 
+liste* trouver_premisse(regle r,char* intitule_premisse);
+
 /** 
  * \fn liste* premisse_tete(regle r)
  * \brief fonction permettant de récupérer la prémisse de tête dans une regle

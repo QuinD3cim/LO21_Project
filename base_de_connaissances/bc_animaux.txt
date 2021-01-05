@@ -1,5 +1,5 @@
 ecaille+exosquelette+insecte=sauterelle
-exosquelette+ecaille=insecte
+exosquelette+ailes+ecaille=insecte
 mamelles+in_utero=mamifere
 event+ecaille+mamifere=cetace
 cetace+grande_dent=narvale

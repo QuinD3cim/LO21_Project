@@ -109,28 +109,23 @@ liste* moteur_inference(liste* base_de_faits,BC base_de_connaissances ){
         copie_bc = base_de_connaissances;
 
         while((copie_bc != NULL)&&(copie_bc->regle)&&(copie_bc->regle->premisses != NULL)){
-            printf("\n%s",copie_bc->regle->conclusion);
             copie_liste_premisses = copie_bc->regle->premisses;
             
-            while(copie_liste_premisses != NULL){
-                
-                if(Si_premisse(copie_liste_premisses,base_de_faits->premisse) == VRAI){
-                    copie_liste_premisses->est_present = VRAI;
-                } else {
-                    copie_liste_premisses->est_present = FAUX;
-                }
-                
-                printf("\n\t%s : %d", copie_liste_premisses->premisse,copie_liste_premisses->est_present);
-                copie_liste_premisses = copie_liste_premisses->suivant;
+            if(Si_premisse(copie_liste_premisses,copie_bf->premisse) == VRAI){
+                trouver_premisse(copie_bc->regle,copie_bf->premisse)->est_present = VRAI;
             }
+
+            copie_liste_premisses = copie_liste_premisses->suivant;
             copie_bc = copie_bc->suivant;
         }
 
         copie_bf = copie_bf->suivant;
     }
+
     /* Deuxième phase : on ajoute les conclusions à la base de faits en fonction des regles qui n'ont que des prémisses vraies */
     copie_bf = base_de_faits;
     copie_bc = base_de_connaissances;
+
     while((copie_bc != NULL)&&(copie_bc->regle != NULL)&&(copie_bc->regle->conclusion != NULL)){
         copie_liste_premisses = copie_bc->regle->premisses;
         printf("\nla regle traitee : %s",copie_bc->regle->conclusion);
