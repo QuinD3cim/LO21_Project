@@ -41,17 +41,18 @@ int main(int argc, char* argv[]){
 
     Write_bc(b, titre);
 
-    BC br = Read_bc("BC_animaux.txt");
-
-    printf("La premiere premisse de la premiere regle de br est : %s\n",premisse_tete(Regle_tete_base(br))->premisse);
-    printf("La conclusion de la premiere regle de br est : %s\n",Conclusion_regle(Regle_tete_base(br)));
-
     ajouter_regle(b,r); 
     printf("La conclusion de la premiere regle de b est : %s\n",b->regle->conclusion);
-    
+
     fichier_choisi = choix_base_de_connaissances();
-    printf("\nLe fichier choisi est : %s",fichier_choisi);
-    afficher_base_connaissances(b,"base test");
+    BC br = Read_bc(fichier_choisi);
+
+
     
+
+    afficher_base_connaissances(br,fichier_choisi);
+    
+    
+
     return EXIT_SUCCESS;
 }

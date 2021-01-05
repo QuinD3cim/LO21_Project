@@ -261,7 +261,7 @@ void afficher_base_connaissances(BC base, char* nom_base_connaissances){
     BC copie_base = base;
     if(nom_base_connaissances !=NULL){
         printf("\n%s",nom_base_connaissances);
-        while(copie_base != NULL){
+        while((copie_base != NULL)&&(copie_base->regle != NULL)&&(copie_base->regle->premisses != NULL)){
             printf("\n\n\tRegle no %d\n",i);
             afficher_regle(copie_base->regle);
             copie_base = copie_base->suivant;
