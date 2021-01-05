@@ -12,39 +12,39 @@ int main(int argc, char* argv[]){
     char* i = (char*) malloc (sizeof(char)*7);
     i = "insecte";
 
+    regle re = creer_regle();
+
     BC b = Creer_base();
 
     inserer_conclusion(r,c);
-
-    printf("La premisse est vide : %d\n",Pas_premisse(r));
+    inserer_conclusion(re,i);
 
     printf("Ajout de %s\n",ec);
+    Ajout_premisse(re,ex);
     Ajout_premisse(r,ec);
+    Ajout_premisse(re,ec);
     printf("Ajout de %s\n",ex);
     Ajout_premisse(r,ex);
     printf("Ajout de %s\n",i);
     Ajout_premisse(r,i);
 
-    printf("La premisse est vide : %d\n",Pas_premisse(r));
 
-    printf("La premiere premisse est : %s\n",premisse_tete(r)->premisse);
-    printf("La premisse %s est dedans : %d\n",i,Si_premisse(r->premisses,i));
+    ajouter_regle(b,r);
+    ajouter_regle(b,re);
 
-    printf("Supprimer %s\n",ec);
-    supprimer_premisse(r,ec);
-    printf("La premisse %s est dedans : %d\n",ec,Si_premisse(r->premisses,ec));
-    printf("La premiere premisse est : %s\n",premisse_tete(r)->premisse);
-    printf("La premisse %s est dedans : %d\n",ex,Si_premisse(r->premisses,ex));
+    printf("La conclusion de la premiere regle de b est : %s\n",Regle_tete_base(b)->conclusion);
+    printf("La conclusion de la deuxieme regle de b est : %s\n",b->suivant->regle->conclusion);
 
-    printf("Ajout de %s\n",ec);
-    Ajout_premisse(r,ec);
-    printf("La premisse %s est dedans : %d\n",ec,Si_premisse(r->premisses,ec));
 
-    printf("Supprimer %s\n",ec);
-    supprimer_premisse(r,ec);
-    printf("La premisse %s est dedans : %d\n",ec,Si_premisse(r->premisses,ec));
+    char* titre = (char*) malloc (sizeof(char)*7);
+    titre = "animaux";
 
-    printf("La conclusion est : %s\n",Conclusion_regle(r));
+    Write_bc(b, titre);
+
+    BC br = Read_bc("BC_animaux.txt");
+
+    printf("La premiere premisse de la premiere regle de br est : %s\n",premisse_tete(Regle_tete_base(br))->premisse);
+    printf("La conclusion de la premiere regle de br est : %s\n",Conclusion_regle(Regle_tete_base(br)));
 
     ajouter_regle(b,r); 
     printf("La conclusion de la premiere regle de b est : %s\n",b->regle->conclusion);
@@ -52,5 +52,6 @@ int main(int argc, char* argv[]){
     fichier_choisi = choix_base_de_connaissances();
     printf("\nLe fichier choisi est : %s",fichier_choisi);
     afficher_base_connaissances(b,"base test");
+    
     return EXIT_SUCCESS;
 }
