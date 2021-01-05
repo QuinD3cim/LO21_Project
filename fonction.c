@@ -3,7 +3,7 @@
 
 /* Fonctions */
 
-/* Fonctions regles */
+    /* Fonctions regles */
 
 void Ajout_premisse(regle r, char* s){
 
@@ -146,13 +146,12 @@ regle supprimer_premisse(regle r,char* intitule_premisse){
     }
     return r;
 }
- 
 
 liste* premisse_tete(regle r){
     return r->premisses;
 }
 
-/* Fonctions base de connaissance */
+    /* Fonctions base*/
 
 BC Creer_base(){
     BC b = (BC) malloc(sizeof(connaissance));
@@ -208,7 +207,8 @@ BC ajouter_regle(BC base, regle r){
     }
 }
 
-/* Fonctions pour les fichiers */
+
+    /* Fonctions pour les fichiers */
 
 void Write_bc(BC b, char* bcName){
 
