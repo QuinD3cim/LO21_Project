@@ -131,16 +131,13 @@ liste* moteur_inference(liste* base_de_faits,BC base_de_connaissances ){
 
         while((copie_bc->suivant != NULL)&&(copie_bc->suivant->regle != NULL)&&(copie_bc->suivant->regle->conclusion != NULL)){
             copie_liste_premisses = copie_bc->regle->premisses;
-            printf("\nla regle traitee : %s",copie_bc->regle->conclusion);
             
             while((copie_liste_premisses != NULL)&&(copie_liste_premisses->est_present==VRAI)){
-                printf("\n%s : %d",copie_liste_premisses->premisse,copie_liste_premisses->est_present);
                 
                 copie_liste_premisses = copie_liste_premisses->suivant;
             }
 
             if((copie_liste_premisses == NULL)&&(Si_premisse(base_de_faits,copie_bc->regle->conclusion)==FAUX)){
-                printf("\nla regle ajoutee est : %s",copie_bc->regle->conclusion);
                 base_de_faits = Ajout_premisse_liste(base_de_faits,copie_bc->regle->conclusion);
                 premisse_en_plus = VRAI;
             }
