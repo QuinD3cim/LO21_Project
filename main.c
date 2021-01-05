@@ -62,7 +62,7 @@ int main(int argc, char* argv[]){
     
 
     afficher_base_connaissances(br,fichier_choisi);
-    printf("\n%s",bf_dauphin->premisse);
+    printf("\n\n\nFonctionnement moteur d'inférence");
     afficher_base_de_faits(bf_dauphin,"Base de faits du dauphin");
     
     bf_dauphin = moteur_inference(bf_dauphin,br);

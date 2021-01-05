@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS =-Werror -pedantic -ansi -Wall -std=c99
+CFLAGS =-Werror -pedantic -g -ansi -Wall -std=c99
 EXEC = project.exe
 
 all: $(EXEC)
