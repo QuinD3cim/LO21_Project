@@ -129,20 +129,16 @@ regle supprimer_premisse(regle r,char* intitule_premisse){
     else 
     {
         liste* indexP = r->premisses;
-        printf("%s\n",indexP->premisse);
         while((indexP->suivant != NULL) && (strcmp((indexP->suivant)->premisse, intitule_premisse) != 0)){
-            printf("+1\n");
             indexP = indexP->suivant;
         }
         if(indexP->suivant != NULL){
-            printf("1\n");
             copie_premisse = indexP->suivant;
             indexP->suivant = (indexP->suivant)->suivant;
             free(copie_premisse);
         }
         else
         {
-            printf("2\n");
             free(indexP->suivant);
             indexP->suivant = NULL;
         }
@@ -233,13 +229,10 @@ void Write_bc(BC b, char* bcName){
     liste* p;
     BC indexB = b;
     bool end;
-    int i = 0;
     if(b != NULL || b->regle != NULL) /* if base is not null or b has a rule */
     {
         do
         {
-            i++;
-            printf("%d",i);
             end = VRAI;
             r = indexB->regle; /* r is the rule of the base */
             p = r->premisses; /* p is a premisse of the rule r */
@@ -258,7 +251,6 @@ void Write_bc(BC b, char* bcName){
                 strcat(line,"\n");
                 fputs(line,f); /* adding the line in the file */
             }
-            printf("%s",line);
             if (indexB->suivant != NULL) /* selecting the next rule if the actual isn't the last and say to continue */
             {
                 indexB = indexB->suivant;
@@ -267,7 +259,63 @@ void Write_bc(BC b, char* bcName){
             }
         } while(end == FAUX); /* while we don't say to end it */
     }
-    
     fclose(f);
+    printf("Le fichier %s est cree.\n",fileName);
+
+}
+
+BC Read_bc(char* fileName){
+
+    /* open the file */
+    FILE* f;
+    f = fopen(fileName,"r");
+
+    BC b = Creer_base(); /* Base we return */
+    regle r = creer_regle(); /* rule to add in the base */
+    BC indexB = b;
+
+    int ch; /* read character */
+    char line[TAILLE_PHRASE_MAX] = ""; /* get characters put together */
+    char* element = NULL; /* the element to put in the rule */
+    int i = 0; /* place to put ch in line */
+    while ((ch = fgetc(f)) != EOF) /* Do until we get to the end of the file */
+    {
+        if (ch == '+' || ch == '=')
+        {
+            /* writing the final phrase in element */
+            element = (char*) malloc (sizeof(char)*strlen(line));
+            strcpy(element,line);
+            /* Adding the premisse */
+            Ajout_premisse(r,element);
+            /* reset line to make new phrase */
+            memset(line,0,TAILLE_PHRASE_MAX);
+            i=0;
+        }
+        else if (ch == '\n') /* if we get the end of a line */
+        {
+            /* writing the final phrase in element */
+            element = (char*) malloc (sizeof(char)*strlen(line));
+            strcpy(element,line);
+            /* Adding the premisse */
+            inserer_conclusion(r,element);
+            /* reset line to make new phrase */
+            memset(line,0,TAILLE_PHRASE_MAX);
+            i=0;
+            /* Adding the rule to the base */
+            ajouter_regle(indexB,r);
+            /* create the next rule */
+            indexB->suivant = Creer_base();
+            indexB = indexB->suivant;
+            /* creating a new rule */
+            r = creer_regle();
+        }
+        else
+        {
+            line[i] = ch;
+            i++;
+        }
+    }
+    indexB->suivant = NULL;
+    return b;
 
 }

@@ -83,5 +83,6 @@ BC ajouter_regle(BC base, regle r);
 
 void Write_bc(BC b, char* bcName);
 
+BC Read_bc(char* fileName);
 
 #endif

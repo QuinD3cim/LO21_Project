@@ -1,4 +1,2 @@
 ecaille+exosquelette+insecte=sauterelle
-ecaille=insecte
-ecaille+exosquelette+insecte=sauterelle
-ecaille=insecte
+exosquelette+ecaille=insecte

@@ -20,12 +20,14 @@ int main(int argc, char* argv[]){
     inserer_conclusion(re,i);
 
     printf("Ajout de %s\n",ec);
+    Ajout_premisse(re,ex);
     Ajout_premisse(r,ec);
     Ajout_premisse(re,ec);
     printf("Ajout de %s\n",ex);
     Ajout_premisse(r,ex);
     printf("Ajout de %s\n",i);
     Ajout_premisse(r,i);
+
 
     ajouter_regle(b,r);
     ajouter_regle(b,re);
@@ -38,6 +40,11 @@ int main(int argc, char* argv[]){
     titre = "animaux";
 
     Write_bc(b, titre);
+
+    BC br = Read_bc("BC_animaux.txt");
+
+    printf("La premiere premisse de la premiere regle de br est : %s\n",premisse_tete(Regle_tete_base(br))->premisse);
+    printf("La conclusion de la premiere regle de br est : %s\n",Conclusion_regle(Regle_tete_base(br)));
 
     return EXIT_SUCCESS;
 }
