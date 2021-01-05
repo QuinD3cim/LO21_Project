@@ -64,7 +64,6 @@ bool Si_premisse(liste* pp, char* s){
 
     if (strcmp(pp->premisse,s)==0) /* Sinon si le texte de la prémisse correspond à la prémisse recherchée*/
     {
-        pp->est_present = VRAI;
         return VRAI; 
     }
     else if (pp->suivant == NULL) /* Sinon s'il n'y a pas de prémisse suivante */
