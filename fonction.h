@@ -191,16 +191,33 @@ regle Regle_tete_base(BC b);
  * \fn void Write_bc(BC b, char* bcName)
  * \param b - base de connaissance que l'on veut enregistrer
  * \param bcName - chaine de caractere representant le nom a donner a la base 
- * \brief permet d'enregister une base dans un fichier .txt
+ * \brief permet d'enregister une base de connaissance dans un fichier .txt
  */
 void Write_bc(BC b, char* bcName);
 
 /**
  * \fn BC Read_bc(char* fileName)
  * \param fileName - chaine de caractere represantant le nom du fichier
- * \return BC - base initialisé et contenant les regles du fichier .txt 
- * \brief permet de recupere la base du fichier .txt
+ * \return BC - base de connaissance initialisé et contenant les regles du fichier .txt 
+ * \brief permet de recupere la base de connaissance du fichier .txt
  */
 BC Read_bc(char* fileName);
+
+/**
+ * \fn void Write_bf(liste* b, char* bcName)
+ * \param b - base de fait que l'on veut enregistrer
+ * \param bcName - chaine de caractere representant le nom a donner a la base de fait 
+ * \brief permet d'enregister une base de fait dans un fichier .txt
+ */
+void Write_bf(liste* b, char* bcName);
+
+/**
+ * \fn liste* Read_bf(char* fileName)
+ * \param fileName - chaine de caractere represantant le nom du fichier
+ * \return liste* - base de fait initialisé et contenant les regles du fichier .txt 
+ * \brief permet de recupere la base de fait du fichier .txt
+ */
+liste* Read_bf(char* fileName);
+
 
 #endif

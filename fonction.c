@@ -409,3 +409,91 @@ BC Read_bc(char* fileName){
     return b;
 
 }
+
+void Write_bf(liste* b, char* bcName){
+
+    FILE* f;
+    
+    /*creating the file name*/
+    char* fileName = (char*) malloc (sizeof(char)*(7+strlen(bcName)));
+    strcpy(fileName,"BF_");
+    strcat(fileName,bcName);
+    strcat(fileName,".txt"); 
+    
+    /*opening the file*/
+    f = fopen(fileName,"w");
+    
+    /*writing the premisses in the file*/
+    char line[100] = "";
+    char* p;
+    liste* indexB = b;
+    bool end;
+    if(b != NULL || b->premisse != NULL) /* if base is not null or b has a premisse */
+    {
+        do
+        {
+            end = VRAI;
+            p = (char*)malloc(sizeof(char)*strlen(indexB->premisse));
+            strcpy(p,indexB->premisse); /* p is a premisse of the base */
+            
+            strcat(line,p);
+            strcat(line,"\n");
+            fputs(line,f); /* adding the line in the file */
+            
+            if (indexB->suivant != NULL) /* selecting the next rule if the actual isn't the last and say to continue */
+            {
+                indexB = indexB->suivant;
+                end = FAUX;
+                strcpy(line,"");
+            }
+        } while(end == FAUX); /* while we don't say to end it */
+    }
+    fclose(f);
+    printf("Le fichier %s est cree.\n",fileName);
+
+}
+
+liste* Read_bf(char* fileName){
+
+    /* open the file */
+    FILE* f;
+    f = fopen(fileName,"r");
+
+    liste* b = (liste*) malloc(sizeof(liste)); /* Base we return */
+    b->premisse = NULL;
+    b->suivant = NULL;
+
+    int ch; /* read character */
+    char line[TAILLE_PHRASE_MAX] = ""; /* get characters put together */
+    char* element = NULL; /* the element to put in the rule */
+    int i = 0; /* place to put ch in line */
+
+    while ((ch = fgetc(f)) != EOF) /* Do until we get to the end of the file */
+    {
+        if (ch == '\n') /* if we get the end of a line */
+        {
+            /* writing the final phrase in element */
+            element = (char*) malloc (sizeof(char)*strlen(line));
+            strcpy(element,line);
+            if(b->premisse == NULL){
+                strcpy(b->premisse,element);
+            }
+            else
+            {
+            /* Adding the premisse */
+            Ajout_premisse_liste(b,element);
+            }
+            /* reset line to make new phrase */
+            memset(line,0,TAILLE_PHRASE_MAX);
+            i=0;
+        }
+        else
+        {
+            line[i] = ch;
+            i++;
+        }
+    }
+    fclose(f);
+    return b;
+
+}

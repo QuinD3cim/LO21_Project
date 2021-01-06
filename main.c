@@ -70,5 +70,10 @@ int main(int argc, char* argv[]){
     bf_dauphin = moteur_inference(bf_dauphin,br);
     afficher_base_de_faits(bf_dauphin,"Base de faits du dauphin");
 
+    Write_bf(bf_dauphin, "dauphin");
+    liste* test = Read_bf("BF_dauphin.txt");
+    afficher_base_de_faits(test,"Dauphin");
+    printf("end");
+
     return EXIT_SUCCESS;
 }
