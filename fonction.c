@@ -303,8 +303,8 @@ void Write_bc(BC b, char* bcName){
     FILE* f;
     
     /*creating the file name*/
-    char* fileName = (char*) malloc (sizeof(char)*(7+strlen(bcName)));
-    strcpy(fileName,"bc_");
+    char* fileName = (char*) malloc (sizeof(char)*(30+strlen(bcName)));
+    strcpy(fileName,"base_de_connaissances\\bc_");
     strcat(fileName,bcName);
     strcat(fileName,".txt"); 
     
@@ -415,8 +415,8 @@ void Write_bf(liste* b, char* bcName){
     FILE* f;
     
     /*creating the file name*/
-    char* fileName = (char*) malloc (sizeof(char)*(7+strlen(bcName)));
-    strcpy(fileName,"BF_");
+    char* fileName = (char*) malloc (sizeof(char)*(20+strlen(bcName)));
+    strcpy(fileName,"base_de_faits\\bf_");
     strcat(fileName,bcName);
     strcat(fileName,".txt"); 
     

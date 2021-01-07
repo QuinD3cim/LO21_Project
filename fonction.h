@@ -170,13 +170,6 @@ void afficher_regle(regle r);
 void afficher_base_connaissances(BC base, char* nom_base_connaissances);
 
 /**
- * \fn BC Creer_base()
- * \return BC - base de connaissance initialisée et vide
- * \brief initialise une Base de connaissance vide
- */
-BC Creer_base();
-
-/**
  * \fn regle Regle_tete_base(BC b)
  * \param b - base de connaissance où l'on veut récupérer
  * \return regle - regle en tete de la base 
