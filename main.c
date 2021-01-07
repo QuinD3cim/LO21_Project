@@ -50,7 +50,7 @@ int main(int argc, char* argv[]){
 
 
     char* titre = (char*) malloc (sizeof(char)*7);
-    titre = "animaux";
+    titre = "animal";
 
     Write_bc(b, titre);
 
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]){
     BC br = Read_bc(fichier_choisi);
 
 
-    
+
 
     afficher_base_connaissances(br,fichier_choisi);
     printf("\n\n\nFonctionnement moteur d'inférence");
@@ -72,8 +72,9 @@ int main(int argc, char* argv[]){
 
     Write_bf(bf_dauphin, "dauphin");
     liste* test = Read_bf("BF_dauphin.txt");
+    printf("done");
     afficher_base_de_faits(test,"Dauphin");
-    printf("end");
+    printf("\n\nend");
 
     return EXIT_SUCCESS;
 }

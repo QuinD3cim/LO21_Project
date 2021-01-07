@@ -304,7 +304,7 @@ void Write_bc(BC b, char* bcName){
     
     /*creating the file name*/
     char* fileName = (char*) malloc (sizeof(char)*(7+strlen(bcName)));
-    strcpy(fileName,"BC_");
+    strcpy(fileName,"bc_");
     strcat(fileName,bcName);
     strcat(fileName,".txt"); 
     
@@ -459,7 +459,7 @@ liste* Read_bf(char* fileName){
     FILE* f;
     f = fopen(fileName,"r");
 
-    liste* b = (liste*) malloc(sizeof(liste)); /* Base we return */
+    liste* b = (liste*) malloc(sizeof(liste)); /* list we return */
     b->premisse = NULL;
     b->suivant = NULL;
 
@@ -470,22 +470,26 @@ liste* Read_bf(char* fileName){
 
     while ((ch = fgetc(f)) != EOF) /* Do until we get to the end of the file */
     {
+        printf("%c",ch);
         if (ch == '\n') /* if we get the end of a line */
         {
             /* writing the final phrase in element */
             element = (char*) malloc (sizeof(char)*strlen(line));
             strcpy(element,line);
             if(b->premisse == NULL){
+                b->premisse = (char*)malloc(sizeof(char)*strlen(element));
                 strcpy(b->premisse,element);
             }
             else
             {
-            /* Adding the premisse */
-            Ajout_premisse_liste(b,element);
+                /* Adding the premisse */
+                b = Ajout_premisse_liste(b,element);
             }
             /* reset line to make new phrase */
+            printf("hey");
             memset(line,0,TAILLE_PHRASE_MAX);
             i=0;
+            printf("done\n");
         }
         else
         {
