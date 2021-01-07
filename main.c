@@ -1,7 +1,9 @@
-#include "fonction.h"
+#include "moteur.h"
 
 int main(int argc, char* argv[]){
-
+    char* fichier_choisi = NULL;
+    liste* bf_dauphin = NULL;   
+    
     regle r = creer_regle();
     char* c = (char*) malloc (sizeof(char)*10);
     c = "sauterelle";
@@ -35,16 +37,34 @@ int main(int argc, char* argv[]){
     printf("La conclusion de la premiere regle de b est : %s\n",Regle_tete_base(b)->conclusion);
     printf("La conclusion de la deuxieme regle de b est : %s\n",b->suivant->regle->conclusion);
 
-
     char* titre = (char*) malloc (sizeof(char)*7);
     titre = "animaux";
 
+    printf("excriture du fichier\n");
     Write_bc(b, titre);
+    free(b);
+ 
+    printf("La conclusion de la premiere regle de b est : %s\n",b->regle->conclusion);
 
-    BC br = Read_bc("BC_animaux.txt");
+    printf("choix fichier\n");
+    fichier_choisi = choix_base_de_connaissances();
+    printf("%s\n",fichier_choisi);
+    printf("Lecture du fichier...\n");
+    BC br = Read_bc(fichier_choisi);
+    printf("Fichier lu !\n");
 
-    printf("La premiere premisse de la premiere regle de br est : %s\n",premisse_tete(Regle_tete_base(br))->premisse);
-    printf("La conclusion de la premiere regle de br est : %s\n",Conclusion_regle(Regle_tete_base(br)));
+    printf("Afficher BC :\n");
+    afficher_base_connaissances(br,fichier_choisi);
+    printf("\n\n\nFonctionnement moteur d'inférence");
+    afficher_base_de_faits(bf_dauphin,"Base de faits du dauphin");
+    
+    bf_dauphin = moteur_inference(bf_dauphin,br);
+    afficher_base_de_faits(bf_dauphin,"Base de faits du dauphin");
+
+    Write_bf(bf_dauphin, "dauphin");
+    liste* test = Read_bf("BF_dauphin.txt");
+    afficher_base_de_faits(test,"Dauphin");
+    printf("\n\nend");
 
     return EXIT_SUCCESS;
 }
