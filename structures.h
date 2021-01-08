@@ -6,10 +6,12 @@
 #include <string.h>
 
 
-typedef enum{
-  VRAI = 1,
-  FAUX = 0
-}bool;
+/* Types */
+
+typedef enum {
+    VRAI = 1,
+    FAUX = 0,
+} bool;
 
 /**
  * \struct liste
@@ -17,6 +19,7 @@ typedef enum{
  */
 typedef struct l{
   char* premisse; /** \brief chaîne de caractères contenant l'intitulé d'une prémisse */
+  bool est_present; /** \brief booléen servant quand on veut utiliser le moteur d'inférence. De base il est à FAUX mais si la prémisse se trouve dans la base de faits alors ce paramètre passe à VRAI. */
   struct l* suivant; /** \brief pointeur sur l'élément suivant de la liste */
 } liste;
 
@@ -27,14 +30,17 @@ typedef struct l{
 typedef struct{
   liste* premisses; /** \brief liste de prémisses */
   char* conclusion; /** \brief chaîne de caractère contenant l'intitulé d'une conclusion */
-} regle;
+} regleElem;
+
+typedef regleElem* regle;
 
 /**
  * \struct connaissance
  * \brief élément d'une base de connaissance : liste de regle
  */
 typedef struct bc_elem{
-  regle* regle; /** \brief liste de regles */
+  struct bc_elem* precedent; /** \brief pointeur sur l'élément precedent de la base de connaissances */
+  regle regle; /** \brief liste de regles */
   struct bc_elem* suivant; /** \brief pointeur sur l'élément suivant de la base de connaissances */
 } connaissance;
 
@@ -43,9 +49,6 @@ typedef struct bc_elem{
  * \brief liste de connaissances
  */
 typedef connaissance* BC;
-
-
-
 
 
 #endif
