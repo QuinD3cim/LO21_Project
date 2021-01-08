@@ -274,6 +274,7 @@ void afficher_premisses(liste* l){
 
 void afficher_base_de_faits(liste* l, char* nom_base_de_faits){
     printf("\nLa base de faits : %s\n", nom_base_de_faits);
+    printf("%s",l->premisse);
     afficher_premisses(l);    
 }
 
@@ -428,8 +429,8 @@ void Write_bf(liste* b, char* bcName){
     FILE* f;
     
     /*creating the file name*/
-    char* fileName = (char*) malloc (sizeof(char)*(7+strlen(bcName)));
-    strcpy(fileName,"bf_");
+    char* fileName = (char*) malloc (sizeof(char)*(20+strlen(bcName)));
+    strcpy(fileName,"./base_de_faits/bf_");
     strcat(fileName,bcName);
     strcat(fileName,".txt"); 
     

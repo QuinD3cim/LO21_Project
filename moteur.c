@@ -1,5 +1,56 @@
 #include "moteur.h"
 
+int menu_principal(){
+    /* Cree le titre */
+    char* titre = (char*)malloc(sizeof(char)*4);
+    strcpy(titre,"Menu");
+    /* Cree les options */
+    char** tableau = (char**)malloc(sizeof(char*)*7);
+    tableau[0] = (char*)malloc(sizeof(char)*26);
+    strcpy(tableau[0],"Creer base de connaissance");
+    tableau[1] = (char*)malloc(sizeof(char)*25);
+    strcpy(tableau[1],"Lire base de connaissance");
+    tableau[2] = (char*)malloc(sizeof(char)*29);
+    strcpy(tableau[2],"Modifier base de connaissance");
+    tableau[3] = (char*)malloc(sizeof(char)*19);
+    strcpy(tableau[3],"Creer base de faits");
+    tableau[4] = (char*)malloc(sizeof(char)*18);
+    strcpy(tableau[4],"Lire base de faits");
+    tableau[5] = (char*)malloc(sizeof(char)*22);
+    strcpy(tableau[5],"Modifier base de faits");
+    tableau[6] = (char*)malloc(sizeof(char)*7);
+    strcpy(tableau[6],"Quitter");
+    /* Affiche le menu */
+    int choice = menu(titre,tableau);
+    free(titre);
+    free(tableau);
+    return choice;
+}
+
+int menu_creer_bc(){
+    /* Cree le titre */
+    char* titre = (char*)malloc(sizeof(char)*26);
+    strcpy(titre,"Creer base de connaissance");
+    /* Cree les options */
+    char** tableau = (char**)malloc(sizeof(char*)*7);
+    tableau[0] = (char*)malloc(sizeof(char)*13);
+    strcpy(tableau[0],"Ajouter regle");
+    tableau[1] = (char*)malloc(sizeof(char)*25);
+    strcpy(tableau[1],"Modifier conclusion regle");
+    tableau[2] = (char*)malloc(sizeof(char)*22);
+    strcpy(tableau[2],"Ajouter premisse regle");
+    tableau[3] = (char*)malloc(sizeof(char)*10);
+    strcpy(tableau[3],"Voir regle");
+    tableau[4] = (char*)malloc(sizeof(char)*32);
+    strcpy(tableau[4],"Enregistrer base de connaissance");
+    tableau[5] = (char*)malloc(sizeof(char)*7);
+    strcpy(tableau[5],"Quitter");
+    /* Affiche le menu */
+    int choice = menu(titre,tableau);
+    free(titre);
+    free(tableau);
+    return choice;
+}
 
 int menu(char* titre_menu, char** tableau_proposition){
     if(tableau_proposition[0] != NULL){
@@ -23,31 +74,31 @@ int menu(char* titre_menu, char** tableau_proposition){
 
 char* choix_base_de_faits(){
     int index_base_de_faits = -1;
+    int size = 0;
     struct dirent *dir;
     int iteration = 0;
     char** tableau_fichiers = NULL;
     char* buffer_fichier;
     // opendir() renvoie un pointeur de type DIR. 
-    DIR *d = opendir("base_de_faits");
+    DIR *d = opendir("./base_de_faits");
 
     if (d != NULL){
+        while ((dir = readdir(d)) != NULL)
+        {
+            size++;
+        }
+        
+        tableau_fichiers = (char**) malloc(sizeof(char*)*(size-2));
+        rewinddir(d);
+
         while ((dir = readdir(d)) != NULL){
             if(strstr(dir->d_name,"bf_")!= NULL){
-                buffer_fichier =(char*) malloc(sizeof(char)*strlen(dir->d_name));
-                buffer_fichier = strcpy(buffer_fichier, dir->d_name);
-
-                if(tableau_fichiers == NULL){
-                    tableau_fichiers = (char**) malloc(sizeof(char*));
-                } else{
-                    tableau_fichiers = realloc(tableau_fichiers, sizeof(char*)*(iteration+1));
-                }
-
-                tableau_fichiers[iteration] = (char*) malloc(sizeof(char)*strlen(buffer_fichier));
-                tableau_fichiers[iteration] = strcpy(tableau_fichiers[iteration],buffer_fichier);
+                    
+                tableau_fichiers[iteration] = (char*) malloc(sizeof(char)*strlen(dir->d_name));
+                tableau_fichiers[iteration] = strcpy(tableau_fichiers[iteration],dir->d_name);
                 tableau_fichiers[iteration + 1] = NULL;
 
                 iteration++;
-                free(buffer_fichier);
             }
         }
         closedir(d);
@@ -91,7 +142,7 @@ char* choix_base_de_connaissances(){
             }
         }
         closedir(d);
-        free(d);
+        
         index_base_de_connaissances = menu("Quelle base de connaissances voulez-vous choisir ?", tableau_fichiers);
         buffer_fichier = (char*) malloc(sizeof(char)*(strlen(tableau_fichiers[index_base_de_connaissances]+ 25)));
         buffer_fichier = strcpy(buffer_fichier,"./base_de_connaissances/");

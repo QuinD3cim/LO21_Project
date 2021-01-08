@@ -100,6 +100,13 @@ regle inserer_conclusion(regle r, char* c_conclusion);
  */
 regle supprimer_premisse(regle r,char* intitule_premisse);
 
+/**
+ * \fn liste* trouver_premisse(regle r,char* intitule_premisse);
+ * \brief fonction permettant de trouver une premisse donnée en argument dans une règle
+ * \param r - regle que l'on veut modifier
+ * \param intitule_premisse - chaîne de caractères, correspond à l'intitule de la premisse que l'on veut trouver
+ * \return une liste - la liste avec la premisse spécifiée en présente si elle l'est
+ */
 liste* trouver_premisse(regle r,char* intitule_premisse);
 
 /** 
@@ -116,7 +123,7 @@ liste* premisse_tete(regle r);
 /**
  * \fn BC Creer_base()
  * \brief Fonction permettant de créer une base vide
- * \return une base e connaissances vide
+ * \return une base de connaissances vide
  */
 BC Creer_base();
 

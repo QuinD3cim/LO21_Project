@@ -5,6 +5,20 @@
 #include "fonction.h"
 
 /** 
+ * \fn int menu_principal()
+ * \brief Fonction permettant d'afficher le menu principal
+ * \return un entier - l'index de la proposition que l'utilisateur a choisi. S'il est égal à -1 c'est qu'il n'y avait pas de propositions.
+ */
+int menu_principal();
+
+/** 
+ * \fn int menu_creer_bc()
+ * \brief Fonction permettant d'afficher le menu creer base de connaissance
+ * \return un entier - l'index de la proposition que l'utilisateur a choisi. S'il est égal à -1 c'est qu'il n'y avait pas de propositions.
+ */
+int menu_creer_bc();
+
+/** 
  * \fn int menu(char* titre_menu, char** tableau_proposition)
  * \brief Fonction permettant d'afficher un menu
  * \param titre_menu - une chaîne de caractères correspondant au titre du menu
