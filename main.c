@@ -384,9 +384,36 @@ int main(int argc, char* argv[]){
             char *fichier_choisi_faits = choix_base_de_faits();
             printf("Lecture du fichier...\n");
             liste* baseFaits = Read_bc(fichier_choisi_faits);
-            afficher_base_de_faits(baseFaits,choix_base_de_faits);
+            afficher_base_de_faits(baseFaits,fichier_choisi_faits);
             break;
         case 5:
+            if(baseFaitChoisi == 1){
+                afficher_base_de_faits(baseFaits,fichier_choisi_faits)
+                int nb = 0;
+                char buffer[TAILLE_PHRASE_MAX];
+                do
+                {
+                    printf("Combien de premisses voulez vous ajouter ?\n")
+                    scanf("%s",buffer);
+                } while ((sscanf(buffer,"%d",&nb)==EOF)||(ccl < 0));
+                char premisse[TAILLE_PHRASE_MAX];
+                for (int i = 0; i < nb; i++)
+                {
+                    do{
+                        printf("Entrez le nom de la premisse %d :\n",i);
+                        scanf("%s",premisse);
+                    }while(lire(&ccl) == 1);
+                    Ajout_premisse_liste(bf,premisse);
+                }
+                bf = moteur_inference(bf,bc);
+                Write_bf(bf,&nom);
+                free(bf);
+            }
+            else
+            {
+                printf("Selectionnez d'abord une base de faits\n");
+            }
+            break;
         case 6:
             free(bc);
             return EXIT_SUCCESS;

@@ -17,7 +17,7 @@ int menu_principal(){
     tableau[4] = (char*)malloc(sizeof(char)*18);
     strcpy(tableau[4],"Lire base de faits");
     tableau[5] = (char*)malloc(sizeof(char)*22);
-    strcpy(tableau[5],"Modifier base de faits");
+    strcpy(tableau[5],"Ajouter dans base de faits");
     tableau[6] = (char*)malloc(sizeof(char)*7);
     strcpy(tableau[6],"Quitter");
     /* Affiche le menu */
