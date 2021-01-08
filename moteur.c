@@ -40,7 +40,32 @@ int menu_creer_bc(){
     tableau[2] = (char*)malloc(sizeof(char)*22);
     strcpy(tableau[2],"Ajouter premisse regle");
     tableau[3] = (char*)malloc(sizeof(char)*10);
-    strcpy(tableau[3],"Voir regle");
+    strcpy(tableau[3],"Voir base");
+    tableau[4] = (char*)malloc(sizeof(char)*32);
+    strcpy(tableau[4],"Enregistrer base de connaissance");
+    tableau[5] = (char*)malloc(sizeof(char)*7);
+    strcpy(tableau[5],"Quitter");
+    /* Affiche le menu */
+    int choice = menu(titre,tableau);
+    free(titre);
+    free(tableau);
+    return choice;
+}
+
+int menu_modifier_bc(){
+    /* Cree le titre */
+    char* titre = (char*)malloc(sizeof(char)*26);
+    strcpy(titre,"Modifier base de connaissance");
+    /* Cree les options */
+    char** tableau = (char**)malloc(sizeof(char*)*7);
+    tableau[0] = (char*)malloc(sizeof(char)*13);
+    strcpy(tableau[0],"Ajouter regle");
+    tableau[1] = (char*)malloc(sizeof(char)*25);
+    strcpy(tableau[1],"Modifier conclusion regle");
+    tableau[2] = (char*)malloc(sizeof(char)*22);
+    strcpy(tableau[2],"Ajouter premisse regle");
+    tableau[3] = (char*)malloc(sizeof(char)*10);
+    strcpy(tableau[3],"Voir base");
     tableau[4] = (char*)malloc(sizeof(char)*32);
     strcpy(tableau[4],"Enregistrer base de connaissance");
     tableau[5] = (char*)malloc(sizeof(char)*7);

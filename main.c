@@ -162,11 +162,11 @@ int main(int argc, char* argv[]){
                         else
                         {
                             do{
-                            printf("Entrez le nom de la premisse %d :\n",i);
-                            scanf("%s",premisse);
-                        }while(lire(&ccl) == 1)
-                        Ajout_premisse(r,premisse);
-                        free(r);
+                                printf("Entrez le nom de la premisse %d :\n",i);
+                                scanf("%s",premisse);
+                            }while(lire(&premisse) == 1)
+                            Ajout_premisse(r,premisse);
+                            free(r);
                             
                         }
                         
@@ -179,11 +179,216 @@ int main(int argc, char* argv[]){
                     quit = 0;
                     free(indexB);
                     break;
+
+                case 3:
+                    afficher_base_connaissances(base);
+                    quit = 0;
+                    break;
+                
+                case 4:
+                    char nom[TAILLE_PHRASE_MAX];
+                    do{
+                        printf("Entrez le nom de la base de connaissance %d :\n",i);
+                        scanf("%s",nom);
+                    }while(lire(&nom) == 1)
+                    Write_bc(base,&nom);
+                    printf("fichier enregistre.\n");
+                    quit = 1;
+                    break;
+                case 5:
+                    quit = 1;
+                    break; 
                 }
+
             } while (quit == 0);
             break;
 
+        case 1:
+            int base_choisie = 1;
+            printf("Choisissez le fichier à lire : \n");
+            char *fichier_choisi = choix_base_de_connaissances();
+            printf("Lecture du fichier...\n");
+            BC bc = Read_bc(fichier_choisi);
+            afficher_base_connaissances(bc);
+            break;
+        case 2:
+            if(base_choisie == 1)
+            {
+                int quit = 0;
+                do
+                {
+                    choice = menu_modifier_bc();
+                    
+                    switch (choice)
+                    {
+                    case 0:
+                        
+                        /* conclusion de la regle */
+                        regle r = creer_regle()
+                        char ccl[TAILLE_PHRASE_MAX];
+                        do{
+                            printf("Entrez la conclusion de la regle :\n");
+                            scanf("%s",ccl);
+                        }while(lire(&ccl) == 1)
+                        inserer_conclusion(r,ccl);
+
+                        /* premisses de la regle */
+                        int nb = 0;
+                        char buffer[TAILLE_PHRASE_MAX];
+                        do
+                        {
+                            printf("Combien de premisses voulez vous ajouter ?\n")
+                            scanf("%s",buffer);
+                        } while ((sscanf(buffer,"%d",&nb)==EOF)||(ccl < 0));
+                        char premisse[TAILLE_PHRASE_MAX];
+                        for (int i = 0; i < nb; i++)
+                        {
+                            do{
+                                printf("Entrez le nom de la premisse %d :\n",i);
+                                scanf("%s",premisse);
+                            }while(lire(&ccl) == 1)
+                            Ajout_premisse(r,premisse);
+                            free(r);
+                        }
+                        
+                        ajouter_regle(br,r);
+                        printf("La regle a ete ajoute.\n");
+                        quit = 0;
+                        break;
+                    
+                    case 1:
+                        if (br != NULL)
+                        {
+                            char ccl[TAILLE_PHRASE_MAX];
+                            do{
+                                printf("Entrez la nouvelle conclusion de la regle :\n");
+                                scanf("%s",ccl);
+                            }while(lire(&ccl) == 1)
+                            inserer_conclusion(r,ccl);
+                        }
+                        else
+                        {
+                            printf("Il n'y a pas de regle à modifier !\n")
+                        }
+                        
+                        quit = 0;
+                        break;
+                    
+                    case 2:
+                        if (base != NULL)
+                        {
+                            afficher_base_connaissances(br);
+                            BC indexB = br;
+                            bool found = FAUX;
+                            char premisse[TAILLE_PHRASE_MAX];
+
+                            do{
+                                printf("Entrez la conclusion de la regle ou l'on ajoute la premisse :\n");
+                                scanf("%s",premisse);
+                            }while(lire(&premisse) == 1)
+
+                            while(indexB->suivant != NULL && found == FAUX){
+                                if (strcmp(Conclusion_regle(Regle_tete_base(indexB),premisse) != 1)
+                                {
+                                    found = VRAI;
+                                    regle r = indexB->regle;
+                                }
+                                indexB = indexB->suivant;                            
+                            }
+                            if (found == FAUX)
+                            {
+                                printf("Cette premisse n'existe pas.\n")
+                            }
+                            else
+                            {
+                                do{
+                                    printf("Entrez le nom de la premisse %d :\n",i);
+                                    scanf("%s",premisse);
+                                }while(lire(&premisse) == 1)
+                                Ajout_premisse(r,premisse);
+                                free(r);
+                                
+                            }
+                            
+                        }
+                        else
+                        {
+                            printf("Il n'y a pas de regle à modifier !\n")
+                        }
+                        
+                        quit = 0;
+                        free(indexB);
+                    }
+                    
+                    break;
+
+                    case 3:
+                        afficher_base_connaissances(br);
+                        quit = 0;
+                        break;
+                    
+                    case 4:
+                        Write_bc(br,fichier_choisi);
+                        printf("fichier enregistre.\n");
+                        quit = 1;
+                        break;
+                    case 5:
+                        quit = 1;
+                        break; 
+                }
+            else
+            {
+                quit = 1;
+            }
+
+            } while (quit == 0);
+            break;
+        case 3:
+            if(base_choisie == 1)
+            {
+                liste* bf = (liste*)malloc(sizeof(liste));
+                char nom[TAILLE_PHRASE_MAX];
+                do{
+                    printf("Entrez le nom de la premisse %d :\n",i);
+                    scanf("%s",nom);
+                }while(lire(&nom) == 1)
+
+                int nb = 0;
+                char buffer[TAILLE_PHRASE_MAX];
+                do
+                {
+                    printf("Combien de premisses voulez vous ajouter ?\n")
+                    scanf("%s",buffer);
+                } while ((sscanf(buffer,"%d",&nb)==EOF)||(ccl < 0));
+                char premisse[TAILLE_PHRASE_MAX];
+                for (int i = 0; i < nb; i++)
+                {
+                    do{
+                        printf("Entrez le nom de la premisse %d :\n",i);
+                        scanf("%s",premisse);
+                    }while(lire(&ccl) == 1);
+                    Ajout_premisse_liste(bf,premisse);
+                }
+                bf = moteur_inference(bf,bc);
+                Write_bf(bf,&nom);
+                free(bf);
+            else
+            {
+                printf("Vous devez selectionner une base de connaissance avant de créer une base de faits.\n");
+            }
+            
+            break;
+        case 4:
+            int baseFaitChoisi = 1
+            printf("Choisissez le fichier à lire : \n");
+            char *fichier_choisi_faits = choix_base_de_faits();
+            printf("Lecture du fichier...\n");
+            liste* baseFaits = Read_bc(fichier_choisi_faits);
+            afficher_base_de_faits(baseFaits,choix_base_de_faits);
+            break;
+        case 5:
         case 6:
+            free(bc);
             return EXIT_SUCCESS;
             break;
         }

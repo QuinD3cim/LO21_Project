@@ -12,6 +12,13 @@
 int menu_principal();
 
 /** 
+ * \fn int menu_modifier_bc()
+ * \brief Fonction permettant d'afficher le menu modifier base de connaissance
+ * \return un entier - l'index de la proposition que l'utilisateur a choisi. S'il est égal à -1 c'est qu'il n'y avait pas de propositions.
+ */
+int menu_modifier_bc();
+
+/** 
  * \fn int menu_creer_bc()
  * \brief Fonction permettant d'afficher le menu creer base de connaissance
  * \return un entier - l'index de la proposition que l'utilisateur a choisi. S'il est égal à -1 c'est qu'il n'y avait pas de propositions.
