@@ -449,7 +449,7 @@ void Write_bf(liste* b, char* bcName){
         } while(end == FAUX); /* while we don't say to end it */
     }
     fclose(f);
-    printf("Le fichier %s est cree.\n",fileName);
+    printf("\nLe fichier %s est cree.\n",fileName);
 
 }
 
