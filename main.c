@@ -233,7 +233,7 @@ int main(int argc, char* argv[]){
         case 2:
             if(base_choisie == 1)
             {
-                int quit = 0;
+                quit = 0;
                 do
                 {
                     choice = menu_modifier_bc();
@@ -277,19 +277,19 @@ int main(int argc, char* argv[]){
                         break;
                     
                     case 1:
-                        if (br != NULL)
+                        if (bc != NULL)
                         {
                             strcpy(ccl,"");
                             do{
                                 printf("Entrez la nouvelle conclusion de la regle :\n");
                                 scanf("%s",ccl);
                                 strcpy(conc,ccl);
-                            }while(lire(conc) == 1)
+                            }while(lire(conc) == 1);
                             inserer_conclusion(r,ccl);
                         }
                         else
                         {
-                            printf("Il n'y a pas de regle à modifier !\n")
+                            printf("Il n'y a pas de regle à modifier !\n");
                         }
                         
                         quit = 0;
@@ -298,8 +298,8 @@ int main(int argc, char* argv[]){
                     case 2:
                         if (base != NULL)
                         {
-                            afficher_base_connaissances(br);
-                            indexB = br;
+                            afficher_base_connaissances(bc,fichier_choisi);
+                            indexB = bc;
                             found = FAUX;
                             strcpy(premisse,"");
 
@@ -307,13 +307,14 @@ int main(int argc, char* argv[]){
                                 printf("Entrez la conclusion de la regle ou l'on ajoute la premisse :\n");
                                 scanf("%s",premisse);
                                 strcpy(prem,premisse);
-                            }while(lire(prem) == 1)
+                            }while(lire(prem) == 1);
 
                             while(indexB->suivant != NULL && found == FAUX){
-                                if (strcmp(Conclusion_regle(Regle_tete_base(indexB),premisse) != 1)
+                                if (strcmp(Conclusion_regle(Regle_tete_base(indexB)),premisse) != 1)
                                 {
                                     found = VRAI;
-                                    regle r = indexB->regle;
+                                    r = creer_regle();
+                                    r = indexB->regle;
                                 }
                                 indexB = indexB->suivant;                            
                             }
@@ -335,7 +336,7 @@ int main(int argc, char* argv[]){
                         }
                         else
                         {
-                            printf("Il n'y a pas de regle à modifier !\n")
+                            printf("Il n'y a pas de regle à modifier !\n");
                         }
                         
                         quit = 0;
@@ -344,7 +345,7 @@ int main(int argc, char* argv[]){
                     break;
 
                     case 3:
-                        afficher_base_connaissances(br);
+                        afficher_base_connaissances(bc,fichier_choisi);
                         quit = 0;
                         break;
                     
@@ -356,7 +357,9 @@ int main(int argc, char* argv[]){
                     case 5:
                         quit = 1;
                         break; 
-                }
+                    }
+                }while (quit == 1);
+            }
             else
             {
                 quit = 1;
